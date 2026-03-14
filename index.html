@@ -215,6 +215,24 @@
     .anim-chars span{display:inline-block;opacity:0;transform:translateY(20px);transition:opacity .4s ease,transform .4s ease;}
     .anim-chars span.in{opacity:1;transform:translateY(0);}
 
+
+    /* CONTACT */
+    #contact{position:relative;z-index:1;padding:100px 52px;border-top:1px solid var(--border);}
+    .contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;max-width:1000px;}
+    .contact-desc{font-size:.97rem;line-height:1.85;color:var(--text-dim);margin-bottom:32px;}
+    .contact-desc strong{color:var(--text);}
+    .btn-twitter{display:inline-flex;align-items:center;gap:12px;background:var(--blue);color:var(--dark);padding:15px 32px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;transition:background .25s,transform .2s;cursor:none;}
+    .btn-twitter:hover{background:var(--blue-bright);transform:translateY(-2px);}
+    .contact-note{margin-top:14px;font-size:.72rem;letter-spacing:.1em;color:var(--text-dim);display:flex;align-items:center;gap:6px;}
+    .contact-note::before{content:'ℹ';color:var(--blue);}
+    .contact-card{background:var(--dark2);border:1px solid var(--border);padding:36px;}
+    .contact-card-title{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--blue);font-weight:700;margin-bottom:24px;}
+    .contact-motif{display:flex;gap:16px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--border);}
+    .contact-motif:last-child{border-bottom:none;}
+    .motif-icon{width:38px;height:38px;background:rgba(74,158,255,.08);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+    .motif-text strong{display:block;font-size:.9rem;color:var(--text);margin-bottom:4px;}
+    .motif-text span{font-size:.8rem;color:var(--text-dim);line-height:1.5;}
+
     @media(max-width:900px){
       nav{padding:14px 20px;}.nav-links{display:none;}
       #profil,#team{padding:60px 20px;}.profil-inner,.team-inner{grid-template-columns:1fr;gap:36px;}
@@ -249,6 +267,7 @@
       <li><a href="#stats">Stats</a></li>
       <li><a href="#career">Carrière</a></li>
       <li><a href="#team">K13</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 
@@ -403,6 +422,42 @@
         <div class="info-row"><span class="k">Rang</span><span class="v blue">Elite</span></div>
         <div class="info-row"><span class="k">Coéquipiers</span><span class="v">Newt</span></div>
         <div class="info-row"><span class="k">Statut</span><span class="v blue">● En route vers le Pro</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="s-num">07</div>
+    <h2 class="s-title">Me <em>Contacter</em></h2>
+    <div class="s-rule"></div>
+    <div class="contact-inner">
+      <div class="reveal-l">
+        <p class="contact-desc">T'as une proposition sérieuse ou t'as juste envie d'échanger sur le compétitif ? Contacte <strong>Kamas</strong> directement sur Twitter. Les messages sérieux auront une réponse — le reste sera ignoré.</p>
+        <a href="https://x.com/KamasFNT" target="_blank" class="btn-twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          ENVOYER UN MESSAGE
+        </a>
+        <p class="contact-note">Tu seras redirigé vers Twitter / X</p>
+      </div>
+      <div class="contact-card reveal-r">
+        <div class="contact-card-title">Motifs de contact acceptés</div>
+        <div class="contact-motif">
+          <div class="motif-icon">🤝</div>
+          <div class="motif-text"><strong>Collaboration / Partenariat</strong><span>T'as un projet sérieux autour du compétitif ou de l'esport.</span></div>
+        </div>
+        <div class="contact-motif">
+          <div class="motif-icon">🎮</div>
+          <div class="motif-text"><strong>Parler Fortnite compétitif</strong><span>Strats, mécaniques, routine d'entraînement — t'es le bienvenu.</span></div>
+        </div>
+        <div class="contact-motif">
+          <div class="motif-icon">👥</div>
+          <div class="motif-text"><strong>Rejoindre la communauté</strong><span>Tu veux suivre le parcours de Kamas vers le pro.</span></div>
+        </div>
+        <div class="contact-motif">
+          <div class="motif-icon">🚫</div>
+          <div class="motif-text"><strong>Aucun troll ni spam</strong><span>Tout message irrespectueux sera ignoré sans exception.</span></div>
+        </div>
       </div>
     </div>
   </section>
