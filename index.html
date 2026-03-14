@@ -159,6 +159,28 @@
     .reveal-r{opacity:0;transform:translateX(28px);transition:opacity .7s ease,transform .7s ease;}
     .reveal-r.visible{opacity:1;transform:none;}
 
+
+    /* FAQ */
+    #faq{position:relative;z-index:1;padding:100px 52px;border-top:1px solid var(--border);}
+    .faq-list{max-width:760px;display:flex;flex-direction:column;gap:12px;}
+    .faq-item{background:var(--dark2);border:1px solid var(--border);overflow:hidden;transition:border-color .3s;}
+    .faq-item.open{border-color:var(--border-h);}
+    .faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;padding:22px 28px;background:transparent;border:none;cursor:none;text-align:left;gap:16px;}
+    .faq-q span{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;letter-spacing:.05em;color:var(--text);}
+    .faq-item.open .faq-q span{color:var(--blue);}
+    .faq-icon{width:28px;height:28px;border:1px solid var(--border-h);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:1.1rem;flex-shrink:0;transition:transform .3s;}
+    .faq-item.open .faq-icon{transform:rotate(45deg);}
+    .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;padding:0 28px;font-size:.93rem;line-height:1.75;color:var(--text-dim);}
+    .faq-item.open .faq-a{max-height:200px;padding:0 28px 22px;}
+
+    /* LOADER */
+    #loader{position:fixed;inset:0;z-index:9999;background:var(--dark);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .6s ease;}
+    #loader.hide{opacity:0;pointer-events:none;}
+    .loader-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,10vw,8rem);letter-spacing:.08em;color:var(--blue);text-shadow:0 0 60px rgba(74,158,255,.3);}
+    .loader-bar-wrap{width:280px;height:2px;background:rgba(74,158,255,.15);}
+    .loader-bar{height:100%;background:var(--blue);width:0%;transition:width .05s linear;}
+    .loader-pct{font-family:'Rajdhani',sans-serif;font-size:.8rem;letter-spacing:.3em;color:var(--text-dim);}
+
     @media(max-width:900px){
       nav{padding:14px 20px;}.nav-links{display:none;}
       #profil,#team{padding:60px 20px;}.profil-inner,.team-inner{grid-template-columns:1fr;gap:36px;}
@@ -172,6 +194,13 @@
   </style>
 </head>
 <body>
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-name">KAMAS</div>
+    <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
+    <div class="loader-pct" id="loaderPct">0%</div>
+  </div>
+
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
   <div class="grid-bg"></div>
@@ -200,7 +229,7 @@
     </p>
     <div class="hero-btns">
       <a href="#profil" class="btn-blue">+ Découvrir</a>
-      <a href="https://discord.gg/4rEpRvQP" class="btn-ghost" target="_blank">
+      <a href="https://discord.com" class="btn-ghost" target="_blank">
         <svg width="15" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M13.545 1.044A13.2 13.2 0 0 0 10.26 0a.05.05 0 0 0-.052.025c-.141.247-.297.57-.406.823a12.21 12.21 0 0 0-3.604 0 8.4 8.4 0 0 0-.412-.823A.051.051 0 0 0 5.733 0a13.17 13.17 0 0 0-3.286 1.044.046.046 0 0 0-.021.018C.356 4.38-.213 7.618.066 10.817c.001.015.01.03.021.038a13.28 13.28 0 0 0 3.996 2.02.052.052 0 0 0 .056-.019c.308-.42.582-.863.818-1.33a.05.05 0 0 0-.028-.07 8.76 8.76 0 0 1-1.248-.594.051.051 0 0 1-.005-.084c.084-.063.168-.128.248-.194a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007c.08.066.164.131.248.194a.051.051 0 0 1-.004.084 8.194 8.194 0 0 1-1.249.593.05.05 0 0 0-.027.07c.24.468.514.912.817 1.33a.051.051 0 0 0 .056.019c1.4-.433 2.779-1.088 4-2.02a.05.05 0 0 0 .02-.038c.334-3.453-.559-6.663-2.366-9.755a.04.04 0 0 0-.02-.019z"/></svg>
         Discord
       </a>
@@ -343,6 +372,31 @@
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="s-num">06</div>
+    <h2 class="s-title">Questions <em>Fréquentes</em></h2>
+    <div class="s-rule"></div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Kamas recherche-t-il une équipe ?</span><div class="faq-icon">+</div></button>
+        <div class="faq-a">Non, Kamas est déjà dans la K13 Esport et son objectif c'est de performer là-bas jusqu'à devenir pro. Il cherche pas ailleurs.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Combien d'heures Kamas s'entraîne-t-il par jour ?</span><div class="faq-icon">+</div></button>
+        <div class="faq-a">Entre 5 et 6 heures par jour. C'est du grind quotidien, pas question de relâcher.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Comment Kamas gère-t-il la pression en cup ?</span><div class="faq-icon">+</div></button>
+        <div class="faq-a">Il stresse un peu en cup, c'est humain. Mais ça l'arrête pas, ça fait partie du jeu.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><span>Quel est le rêve de Kamas ?</span><div class="faq-icon">+</div></button>
+        <div class="faq-a">Être le meilleur joueur du monde, avec la meilleure équipe, et s'asseoir à la table des plus grands joueurs de tous les temps.</div>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <div class="footer-logo">KAMAS</div>
     <div class="footer-copy">© 2025 · Kamas · K13 Esport</div>
@@ -386,6 +440,29 @@
       navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+c));
       document.getElementById('backTop').classList.toggle('show',window.scrollY>400);
     });
+
+    // Loader
+    (function(){
+      const bar=document.getElementById('loaderBar');
+      const pct=document.getElementById('loaderPct');
+      const loader=document.getElementById('loader');
+      let p=0;
+      const iv=setInterval(()=>{
+        p+=Math.random()*4+1;
+        if(p>=100){p=100;clearInterval(iv);setTimeout(()=>{loader.classList.add('hide');setTimeout(()=>{loader.style.display='none';},600);},300);}
+        bar.style.width=p+'%';
+        pct.textContent=Math.round(p)+'%';
+      },40);
+    })();
+
+    // FAQ
+    function toggleFaq(btn){
+      const item=btn.parentElement;
+      const isOpen=item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+      if(!isOpen)item.classList.add('open');
+    }
+
   </script>
 </body>
 </html>
