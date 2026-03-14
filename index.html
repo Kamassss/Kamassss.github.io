@@ -174,12 +174,46 @@
     .faq-item.open .faq-a{max-height:200px;padding:0 28px 22px;}
 
     /* LOADER */
-    #loader{position:fixed;inset:0;z-index:9999;background:var(--dark);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .6s ease;}
+    #loader{position:fixed;inset:0;z-index:9999;background:var(--dark);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;transition:opacity .8s ease;}
     #loader.hide{opacity:0;pointer-events:none;}
-    .loader-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,10vw,8rem);letter-spacing:.08em;color:var(--blue);text-shadow:0 0 60px rgba(74,158,255,.3);}
-    .loader-bar-wrap{width:280px;height:2px;background:rgba(74,158,255,.15);}
-    .loader-bar{height:100%;background:var(--blue);width:0%;transition:width .05s linear;}
-    .loader-pct{font-family:'Rajdhani',sans-serif;font-size:.8rem;letter-spacing:.3em;color:var(--text-dim);}
+    .loader-name{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(4rem,14vw,11rem);
+      letter-spacing:.1em;
+      color:var(--blue);
+      text-shadow:0 0 80px rgba(74,158,255,.25);
+      opacity:0;
+      transform:translateY(20px);
+      animation:loaderNameIn .8s ease .2s forwards;
+    }
+    @keyframes loaderNameIn{to{opacity:1;transform:translateY(0);}}
+    .loader-bar-wrap{width:300px;height:1px;background:rgba(74,158,255,.15);opacity:0;animation:fadeIn .5s ease .7s forwards;}
+    .loader-bar{height:100%;background:var(--blue);width:0%;box-shadow:0 0 8px rgba(74,158,255,.5);}
+    .loader-pct{font-family:'Rajdhani',sans-serif;font-size:.75rem;letter-spacing:.35em;color:var(--text-dim);opacity:0;animation:fadeIn .5s ease .7s forwards;}
+    .loader-skip{
+      opacity:0;
+      animation:fadeIn .5s ease 1.2s forwards;
+      background:transparent;
+      border:1px solid rgba(74,158,255,.3);
+      color:var(--text-dim);
+      font-family:'Rajdhani',sans-serif;
+      font-weight:600;
+      font-size:.7rem;
+      letter-spacing:.25em;
+      text-transform:uppercase;
+      padding:10px 24px;
+      border-radius:40px;
+      cursor:pointer;
+      display:flex;align-items:center;gap:8px;
+      transition:border-color .3s,color .3s;
+    }
+    .loader-skip:hover{border-color:var(--blue);color:var(--blue);}
+
+    /* TEXT ANIMATIONS */
+    .anim-word{display:inline-block;opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease;}
+    .anim-word.in{opacity:1;transform:translateY(0);}
+    .anim-chars span{display:inline-block;opacity:0;transform:translateY(20px);transition:opacity .4s ease,transform .4s ease;}
+    .anim-chars span.in{opacity:1;transform:translateY(0);}
 
     @media(max-width:900px){
       nav{padding:14px 20px;}.nav-links{display:none;}
@@ -199,6 +233,7 @@
     <div class="loader-name">KAMAS</div>
     <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
     <div class="loader-pct" id="loaderPct">0%</div>
+    <button class="loader-skip" onclick="skipLoader()">PASSER &#9658;</button>
   </div>
 
   <div class="cursor" id="cursor"></div>
@@ -220,9 +255,9 @@
   <!-- HERO -->
   <section id="hero">
     <div class="hero-badge"><span></span>Joueur Compétitif — K13 Esport</div>
-    <h1 class="hero-name">KAMAS</h1>
-    <p class="hero-subtitle">The King</p>
-    <div class="hero-tag">Prochain Meilleur IGL Au Monde</div>
+    <h1 class="hero-name anim-chars">KAMAS</h1>
+    <p class="hero-subtitle anim-words">The King</p>
+    <div class="hero-tag anim-words">Prochain Meilleur IGL Au Monde</div>
     <p class="hero-desc">
       <strong>IGL</strong> · 260 FPS · PC. Kamas a commencé sur Xbox par passion,
       et aujourd'hui il grind pour devenir pro avec la <strong>K13 Esport</strong>.
@@ -442,18 +477,37 @@
     });
 
     // Loader
-    (function(){
-      const bar=document.getElementById('loaderBar');
-      const pct=document.getElementById('loaderPct');
-      const loader=document.getElementById('loader');
-      let p=0;
-      const iv=setInterval(()=>{
-        p+=Math.random()*4+1;
-        if(p>=100){p=100;clearInterval(iv);setTimeout(()=>{loader.classList.add('hide');setTimeout(()=>{loader.style.display='none';},600);},300);}
-        bar.style.width=p+'%';
-        pct.textContent=Math.round(p)+'%';
-      },40);
-    })();
+    const loaderBar=document.getElementById('loaderBar');
+    const loaderPct=document.getElementById('loaderPct');
+    const loaderEl=document.getElementById('loader');
+    let loaderP=0, loaderIv;
+    function hideLoader(){
+      loaderEl.classList.add('hide');
+      setTimeout(()=>{loaderEl.style.display='none'; initTextAnims();},800);
+    }
+    function skipLoader(){clearInterval(loaderIv);loaderP=100;loaderBar.style.width='100%';loaderPct.textContent='100%';setTimeout(hideLoader,200);}
+    loaderIv=setInterval(()=>{
+      loaderP+=Math.random()*3+0.5;
+      if(loaderP>=100){loaderP=100;clearInterval(loaderIv);setTimeout(hideLoader,400);}
+      loaderBar.style.width=loaderP+'%';
+      loaderPct.textContent=Math.round(loaderP)+'%';
+    },50);
+
+    // Text animations
+    function initTextAnims(){
+      // Split hero name into chars
+      document.querySelectorAll('.anim-chars').forEach(el=>{
+        const txt=el.textContent;
+        el.innerHTML=txt.split('').map((ch,i)=>`<span style="transition-delay:${i*0.05}s">${ch==' '?'&nbsp;':ch}</span>`).join('');
+        setTimeout(()=>el.querySelectorAll('span').forEach(s=>s.classList.add('in')),100);
+      });
+      // Split words
+      document.querySelectorAll('.anim-words').forEach(el=>{
+        const words=el.textContent.trim().split(' ');
+        el.innerHTML=words.map((w,i)=>`<span class="anim-word" style="transition-delay:${i*0.08}s">${w}</span> `).join('');
+        setTimeout(()=>el.querySelectorAll('.anim-word').forEach(w=>w.classList.add('in')),100);
+      });
+    }
 
     // FAQ
     function toggleFaq(btn){
